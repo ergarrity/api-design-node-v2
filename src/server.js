@@ -6,8 +6,20 @@ import { signin, protect } from './api/modules/auth'
 // Declare an app from express
 const app = express()
 
+const apiRouter = express.Router()
+
+apiRouter.get('/', (req, res) => res.json({api: true})) 
+
+setupMiddware(app)
+connect()
+// setup basic routing for index route
+
+app.use('/signin', signin)
+app.use('/api', apiRouter)
+
+app.get('/', (req, res) => res.json({first: true}))
 app.all('*', (req, res) => {
-    res.json({ok: true})
+    res.json({ok: false})
 })
 
 export default app
