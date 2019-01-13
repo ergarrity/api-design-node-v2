@@ -8,14 +8,16 @@ const app = express()
 
 const apiRouter = express.Router()
 
-apiRouter.get('/', (req, res) => res.json({api: true})) 
+apiRouter.get('/', (req, res) => res.json({api: true}))
+apiRouter.all('*', (req, res) => res.json({apiALL: true}))
 
 setupMiddware(app)
-connect()
+// connect()
 // setup basic routing for index route
 
 app.use('/signin', signin)
 app.use('/api', apiRouter)
+apiRouter.use('/rest', restRouter)
 
 app.get('/', (req, res) => res.json({first: true}))
 app.all('*', (req, res) => {
