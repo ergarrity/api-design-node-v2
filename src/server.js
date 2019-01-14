@@ -7,10 +7,11 @@ import { signin, protect } from './api/modules/auth'
 const app = express()
 
 setupMiddware(app)
-connect()
+// connect()
 // setup basic routing for index route
 
 app.use('/signin', signin)
+app.use('/api', restRouter)
 
 // catch all
 app.all('*', (req, res) => {
