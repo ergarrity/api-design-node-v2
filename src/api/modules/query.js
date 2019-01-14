@@ -1,30 +1,32 @@
 import merge from 'lodash.merge'
+import songController from '../resources/song/song.controller';
 const testData = {message: 'hello'}
 
 // These are generic methods used in the generic controllers for all models
 export const controllers = {
   createOne(model, body) {
-    return Promise.resolve(testData)
+    return model.create(body)
   },
 
   updateOne(docToUpdate, update) {
-    return Promise.resolve(testData)
+    merge(docToUpdate, update) //first object passed will inherit values from secon object
+    return docToUpdate.save()
   },
 
   deleteOne(docToDelete) {
-    return Promise.resolve(testData)
+    return docToDelete.remove()
   },
 
   getOne(docToGet) {
-    return Promise.resolve(testData)
+    return Promise.resolve(docToGet)
   },
 
   getAll(model) {
-    return Promise.resolve(testData)
+    return model.find({}).exec()
   },
 
   findByParam(model, id) {
-    return Promise.resolve(testData)
+    return model.findById(id).exec()
   }
 }
 
@@ -89,3 +91,22 @@ export const generateControllers = (model, overrides = {}) => {
 
   return {...defaults, ...overrides}
 }
+
+// MODEL LEVEL
+// const song = await Song.findById(id).exec() <-- .exec() only needed for things that start with find
+// Song.findOne({name: 'thisname'}).exec()
+
+// const song = new Song({})
+// Song.create({})
+
+// Song.findOneAndUpdate({name: 'thisname'}, {name: 'othername'}, {new: true})
+
+
+// DOCUMENT LEVEL
+// song.save()
+// song.remove()
+// song.populate()
+
+
+
+
